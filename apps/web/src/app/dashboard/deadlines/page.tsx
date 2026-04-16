@@ -1,131 +1,130 @@
 import type { ReactElement } from 'react';
 import { Topbar } from '@/components/layout/topbar';
-import { AlertTriangle, Clock, Calendar, ChevronLeft, ChevronRight, Bell } from 'lucide-react';
+import { AlertTriangle, Clock, ChevronRight, Bell, AlertCircle } from 'lucide-react';
 
-const WEEK_DAYS = ['Mon 14', 'Tue 15', 'Wed 16', 'Thu 17', 'Fri 18', 'Sat 19', 'Sun 20'];
-
-const CALENDAR_ITEMS: { day: number; label: string; type: string; color: string; bg: string }[] = [
-  { day: 0, label: 'Volkov · interview prep', type: 'N-400', color: 'text-emerald-700', bg: 'bg-emerald-50 border-emerald-200' },
-  { day: 1, label: 'Moreno · biometrics', type: 'I-130', color: 'text-blue-700', bg: 'bg-blue-50 border-blue-200' },
-  { day: 2, label: 'Sharma · NIW Prong 3 evidence', type: 'RFE d-15', color: 'text-amber-700', bg: 'bg-amber-50 border-amber-200' },
-  { day: 3, label: 'Iyer · LCA posted', type: 'H-1B', color: 'text-blue-700', bg: 'bg-blue-50 border-blue-200' },
-  { day: 4, label: 'Silva · 90-day window ends', type: 'I-751', color: 'text-red-700', bg: 'bg-red-50 border-red-200' },
+const URGENT = [
+  { case: 'Kapoor', type: 'NOID (I-130)', days: 6, owner: 'Rahul', severity: 'critical' as const },
+  { case: 'Osei', type: 'I-907 response', days: 9, owner: 'Jess', severity: 'warning' as const },
+  { case: 'Sharma', type: 'RFE (NIW)', days: 15, owner: 'Danish', severity: 'warning' as const },
+  { case: 'Silva', type: 'I-751 90-day window', days: 10, owner: 'Danish', severity: 'warning' as const },
+  { case: 'Hussein', type: 'Asylum one-year bar', days: 41, owner: 'Danish', severity: 'normal' as const },
+  { case: 'Wei', type: 'O-1A petition', days: 33, owner: 'Jess', severity: 'normal' as const },
 ];
 
-const AGENCY_CLOCKS = [
-  { case: 'Sharma', type: 'RFE (NIW)', daysLeft: 15, owner: 'Danish', urgent: true },
-  { case: 'Kapoor', type: 'NOID (I-130)', daysLeft: 6, owner: 'Rahul', urgent: true },
-  { case: 'Osei', type: 'I-907 response', daysLeft: 9, owner: 'Jess', urgent: false },
-  { case: 'Hussein', type: 'Asylum one-year bar', daysLeft: 41, owner: 'Danish', urgent: false },
-  { case: 'Wei', type: 'O-1A petition', daysLeft: 33, owner: 'Jess', urgent: false },
-];
-
-const VISA_BULLETIN = [
-  { category: 'EB-2', country: 'India', cutoff: '01 Nov 2012', status: 'Advanced 2w', statusColor: 'bg-amber-50 text-amber-700' },
-  { category: 'EB-2', country: 'China', cutoff: '01 Jun 2020', status: 'Unchanged', statusColor: 'bg-surface-sunken text-content-secondary' },
-  { category: 'EB-3', country: 'India', cutoff: '15 May 2013', status: 'Current for 2 cases', statusColor: 'bg-emerald-50 text-emerald-700' },
-  { category: 'F-2A', country: 'Mexico', cutoff: 'Current', status: 'Current', statusColor: 'bg-emerald-50 text-emerald-700' },
-  { category: 'EB-1', country: 'All', cutoff: 'Current', status: 'Current', statusColor: 'bg-emerald-50 text-emerald-700' },
+const BULLETIN = [
+  { category: 'EB-1', country: 'All chargeability', cutoff: 'Current', change: 'Current' },
+  { category: 'EB-2', country: 'India', cutoff: '01 Nov 2012', change: 'Advanced 2 weeks' },
+  { category: 'EB-2', country: 'China', cutoff: '01 Jun 2020', change: 'No change' },
+  { category: 'EB-3', country: 'India', cutoff: '15 May 2013', change: 'Current for 2 cases' },
+  { category: 'F-2A', country: 'Mexico', cutoff: 'Current', change: 'Current' },
 ];
 
 export default function DeadlinesPage(): ReactElement {
+  const criticalCount = URGENT.filter((u) => u.severity === 'critical').length;
+
   return (
     <>
       <Topbar firstName="Danish" previewMode />
-      <main className="flex-1 overflow-y-auto p-6">
+      <main className="flex-1 overflow-y-auto px-8 py-7">
+
+        {/* Page header — simple */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-semibold text-content">Deadlines & Ticklers</h1>
-            <p className="text-[12px] text-content-tertiary">RFE clocks, Visa Bulletin, hearing dates, filing windows</p>
+            <h1 className="text-heading text-content">Deadlines & Ticklers</h1>
+            <p className="mt-1 text-body">{URGENT.length} tracked deadlines · {criticalCount} critical</p>
           </div>
-          <div className="flex items-center gap-2">
-            <button className="flex items-center gap-1 rounded-lg border border-surface-border px-3 py-2 text-[12px] text-content-secondary hover:bg-surface">
-              <Bell className="h-3.5 w-3.5" /> Escalation rules
+          <button className="flex items-center gap-2 rounded-[10px] border border-surface-border px-4 py-2.5 text-[13px] font-medium text-content-secondary hover:bg-surface-sunken">
+            <Bell className="h-4 w-4" /> Escalation rules
+          </button>
+        </div>
+
+        {/* Critical alert — stands out immediately */}
+        {criticalCount > 0 && (
+          <div className="mt-6 flex items-center gap-4 rounded-[14px] bg-danger-light border border-danger/20 px-6 py-4">
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-danger/10">
+              <AlertCircle className="h-5 w-5 text-danger" />
+            </div>
+            <div className="flex-1">
+              <p className="text-[15px] font-semibold text-danger">Critical: Kapoor NOID response due in 6 days</p>
+              <p className="mt-0.5 text-[13px] text-danger/70">This is the most urgent item. Failure to respond will result in case denial.</p>
+            </div>
+            <button className="rounded-[10px] bg-danger px-4 py-2.5 text-[13px] font-semibold text-white shadow-sm hover:bg-danger/90">
+              Open case <ChevronRight className="ml-1 inline h-4 w-4" />
             </button>
           </div>
-        </div>
+        )}
 
-        {/* Week calendar */}
-        <div className="mt-5 rounded-xl border border-surface-border bg-surface-raised p-5">
-          <div className="mb-4 flex items-center justify-between">
-            <button className="rounded-md p-1.5 text-content-muted hover:bg-surface-sunken"><ChevronLeft className="h-4 w-4" /></button>
-            <h2 className="text-[13px] font-semibold text-content">Week of April 14, 2026</h2>
-            <button className="rounded-md p-1.5 text-content-muted hover:bg-surface-sunken"><ChevronRight className="h-4 w-4" /></button>
-          </div>
-          <div className="grid grid-cols-7 gap-2">
-            {WEEK_DAYS.map((day, i) => (
-              <div key={day} className="text-center">
-                <p className="mb-2 text-[12px] font-medium text-content-muted">{day}</p>
-                <div className="min-h-[80px] rounded-lg border border-surface-border/50 p-2">
-                  {CALENDAR_ITEMS.filter((item) => item.day === i).map((item) => (
-                    <div key={item.label} className={`rounded-md border p-2 text-[12px] ${item.bg}`}>
-                      <span className={`font-semibold ${item.color}`}>{item.type}</span>
-                      <p className="mt-0.5 text-content-secondary">{item.label}</p>
-                    </div>
-                  ))}
+        {/* Two-column layout with clear visual separation */}
+        <div className="mt-7 grid grid-cols-5 gap-6">
+
+          {/* Agency response clocks — left 3 cols, the primary focus */}
+          <section className="col-span-3 card-elevated p-6">
+            <h2 className="text-subheading text-content">Agency response clocks</h2>
+            <p className="mt-1 text-caption">Sorted by urgency · red = respond immediately</p>
+
+            <div className="mt-5 space-y-3">
+              {URGENT.map((item) => (
+                <div key={item.case} className={`flex items-center gap-4 rounded-[10px] p-4 transition-colors ${
+                  item.severity === 'critical' ? 'bg-danger-light border border-danger/20' :
+                  item.severity === 'warning' ? 'bg-warning-light/50 border border-warning/10' :
+                  'bg-surface border border-surface-border'
+                }`}>
+                  {/* Days left — the most important number */}
+                  <div className={`grid h-12 w-12 shrink-0 place-items-center rounded-[10px] text-[18px] font-bold ${
+                    item.severity === 'critical' ? 'bg-danger text-white' :
+                    item.severity === 'warning' ? 'bg-warning text-white' :
+                    'bg-surface-sunken text-content-secondary'
+                  }`}>
+                    {item.days}
+                  </div>
+
+                  <div className="flex-1">
+                    <p className="text-[15px] font-semibold text-content">{item.case}</p>
+                    <p className="text-caption">{item.type}</p>
+                  </div>
+
+                  <span className="text-caption">{item.owner}</span>
+
+                  <span className={`rounded-lg px-3 py-1 text-[12px] font-semibold ${
+                    item.severity === 'critical' ? 'bg-danger/10 text-danger' :
+                    item.severity === 'warning' ? 'bg-warning/10 text-warning' :
+                    'bg-surface-sunken text-content-tertiary'
+                  }`}>
+                    {item.days} days
+                  </span>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-4 grid grid-cols-2 gap-4">
-          {/* Agency clocks */}
-          <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
-            <h2 className="text-[13px] font-semibold text-content">Agency response clocks</h2>
-            <div className="mt-3">
-              <table className="w-full">
-                <thead>
-                  <tr className="text-[12px] font-semibold uppercase tracking-wider text-content-muted">
-                    <th className="pb-2 text-left">Case</th>
-                    <th className="pb-2 text-left">Type</th>
-                    <th className="pb-2 text-right">Days left</th>
-                    <th className="pb-2 text-left pl-3">Owner</th>
-                  </tr>
-                </thead>
-                <tbody className="text-[13px]">
-                  {AGENCY_CLOCKS.map((c) => (
-                    <tr key={c.case} className="border-t border-surface-border/30">
-                      <td className="py-2.5 font-medium text-content">{c.case}</td>
-                      <td className="py-2.5 text-content-secondary">{c.type}</td>
-                      <td className={`py-2.5 text-right font-semibold ${c.daysLeft <= 10 ? 'text-red-600' : c.daysLeft <= 20 ? 'text-amber-600' : 'text-content-secondary'}`}>{c.daysLeft}</td>
-                      <td className="py-2.5 pl-3 text-content-tertiary">{c.owner}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              ))}
             </div>
-          </div>
+          </section>
 
-          {/* Visa Bulletin */}
-          <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
+          {/* Visa Bulletin — right 2 cols, secondary info */}
+          <section className="col-span-2 card-elevated p-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-[13px] font-semibold text-content">Visa Bulletin · April 2026</h2>
-              <span className="text-[12px] text-content-muted">Auto-scraped from DOS</span>
+              <h2 className="text-subheading text-content">Visa Bulletin</h2>
+              <span className="text-caption">April 2026</span>
             </div>
-            <div className="mt-3">
-              <table className="w-full">
-                <thead>
-                  <tr className="text-[12px] font-semibold uppercase tracking-wider text-content-muted">
-                    <th className="pb-2 text-left">Category</th>
-                    <th className="pb-2 text-left">Country</th>
-                    <th className="pb-2 text-left">Cutoff</th>
-                    <th className="pb-2 text-right">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="text-[13px]">
-                  {VISA_BULLETIN.map((v, i) => (
-                    <tr key={i} className="border-t border-surface-border/30">
-                      <td className="py-2.5 font-medium text-content">{v.category}</td>
-                      <td className="py-2.5 text-content-secondary">{v.country}</td>
-                      <td className="py-2.5 text-content-secondary">{v.cutoff}</td>
-                      <td className="py-2.5 text-right"><span className={`rounded-md px-2 py-0.5 text-[12px] font-semibold ${v.statusColor}`}>{v.status}</span></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <p className="mt-1 text-caption">Auto-scraped from DOS monthly</p>
+
+            <div className="mt-5 space-y-3">
+              {BULLETIN.map((row, i) => (
+                <div key={i} className="flex items-center justify-between rounded-[10px] border border-surface-border p-4">
+                  <div>
+                    <p className="text-[14px] font-semibold text-content">{row.category}</p>
+                    <p className="text-caption">{row.country}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[14px] font-medium text-content">{row.cutoff}</p>
+                    <p className={`text-[12px] font-medium ${
+                      row.change.includes('Advanced') ? 'text-warning' :
+                      row.change.includes('Current for') ? 'text-success' :
+                      row.change === 'Current' ? 'text-success' :
+                      'text-content-tertiary'
+                    }`}>{row.change}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
+          </section>
         </div>
       </main>
     </>
