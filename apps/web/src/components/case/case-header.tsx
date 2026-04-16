@@ -5,120 +5,79 @@ import { usePathname } from 'next/navigation';
 import type { ReactElement } from 'react';
 import { ArrowLeft, CheckCircle2, Circle } from 'lucide-react';
 
-const DEMO = {
-  caseNumber: 'NIW-2026-0317',
-  client: 'Priya Sharma',
-  type: 'EB-2 NIW',
-  framework: 'Matter of Dhanasar',
-  attorney: 'Danish',
-  caseManager: 'Jess',
-  retainer: '$8,500 paid',
-  engagedDate: 'Feb 3',
-  daysInSystem: 72,
-  score: 84,
-  scoreLabel: 'Strong',
-  modelVersion: 'v3.2',
-};
-
-const STAGES = ['Engaged', 'Intake', 'Preparation', 'Attorney review', 'Filed', 'Adjudication', 'Decision'];
+const STAGES = ['Engaged', 'Intake', 'Preparation', 'Attorney review', 'Filed', 'Decision'];
 const CURRENT_STAGE = 2;
 
-interface Tab {
-  label: string;
-  href: string;
-  count?: number;
-}
-
-function getTabs(caseId: string): Tab[] {
-  const base = `/dashboard/cases/${caseId}`;
-  return [
-    { label: 'Overview', href: base },
-    { label: 'Documents', href: `${base}/documents`, count: 38 },
-    { label: 'Assessment', href: `${base}/assessment` },
-    { label: 'Forms', href: `${base}?tab=forms` },
-    { label: 'Exhibits', href: `${base}?tab=exhibits` },
-    { label: 'Letters', href: `${base}?tab=letters` },
-    { label: 'Research', href: `${base}?tab=research` },
-    { label: 'Opportunities', href: `${base}?tab=opportunities` },
-    { label: 'Messages', href: `${base}?tab=messages` },
-    { label: 'Billing', href: `${base}?tab=billing` },
-    { label: 'Audit log', href: `${base}?tab=audit` },
-  ];
-}
+const TABS = [
+  { label: 'Overview', href: '' },
+  { label: 'Documents', href: '/documents', count: 38 },
+  { label: 'Assessment', href: '/assessment' },
+  { label: 'Messages', href: '?tab=messages' },
+  { label: 'Billing', href: '?tab=billing' },
+];
 
 export function CaseHeader({ caseId = '1' }: { caseId?: string }): ReactElement {
   const pathname = usePathname();
-  const tabs = getTabs(caseId);
+  const base = `/dashboard/cases/${caseId}`;
 
   return (
-    <div className="border-b border-surface-border bg-surface-raised px-6 pt-4 pb-0">
-      <Link href="/dashboard/cases" className="mb-3 inline-flex items-center gap-1 text-[12px] text-content-tertiary hover:text-content-secondary">
-        <ArrowLeft className="h-3 w-3" /> Back to cases
-      </Link>
+    <div className="border-b border-surface-border bg-surface-raised">
+      {/* Top section — compact */}
+      <div className="px-8 pt-5 pb-0">
+        <Link href="/dashboard/cases" className="inline-flex items-center gap-1.5 text-[13px] text-content-tertiary hover:text-brand">
+          <ArrowLeft className="h-3.5 w-3.5" /> Cases
+        </Link>
 
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-[12px] text-content-muted">Case · {DEMO.caseNumber}</p>
-          <h1 className="text-xl font-bold text-content">{DEMO.client}</h1>
-          <p className="text-[13px] text-content-tertiary">{DEMO.type} · {DEMO.framework}</p>
-          <div className="mt-2.5 flex flex-wrap gap-1.5">
-            <Chip>Attorney: {DEMO.attorney}</Chip>
-            <Chip>Case mgr: {DEMO.caseManager}</Chip>
-            <Chip>Retainer: {DEMO.retainer}</Chip>
-            <Chip>Engaged {DEMO.engagedDate} · {DEMO.daysInSystem}d</Chip>
+        {/* Name + score on one line */}
+        <div className="mt-3 flex items-center justify-between">
+          <div>
+            <h1 className="text-[22px] font-bold text-content">Priya Sharma</h1>
+            <p className="mt-0.5 text-[14px] text-content-tertiary">EB-2 NIW · Matter of Dhanasar · Attorney: Danish</p>
+          </div>
+          <div className="text-right">
+            <p className="text-[42px] font-extrabold leading-none text-success">84</p>
+            <p className="mt-1 text-caption">Strong · v3.2</p>
           </div>
         </div>
-        <div className="text-right">
-          <p className="text-[12px] text-content-muted">Eligibility score</p>
-          <p className="text-4xl font-black text-emerald-600">{DEMO.score}</p>
-          <p className="text-[12px] text-content-muted">{DEMO.scoreLabel} · {DEMO.modelVersion}</p>
+
+        {/* Stage rail — simplified, fewer stages, bigger text */}
+        <div className="mt-4 flex items-center gap-2">
+          {STAGES.map((s, i) => (
+            <div key={s} className="flex items-center gap-2">
+              {i > 0 && <div className={`h-px w-5 ${i <= CURRENT_STAGE ? 'bg-success' : 'bg-surface-border'}`} />}
+              <span className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-semibold ${
+                i < CURRENT_STAGE ? 'text-success'
+                : i === CURRENT_STAGE ? 'bg-brand-lighter text-brand ring-1 ring-brand/30'
+                : 'text-content-muted'
+              }`}>
+                {i < CURRENT_STAGE && <CheckCircle2 className="h-3.5 w-3.5" />}
+                {i === CURRENT_STAGE && <Circle className="h-3.5 w-3.5 fill-current" />}
+                {s}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Stage rail */}
-      <div className="mt-5 flex items-center gap-1.5 overflow-x-auto pb-1">
-        {STAGES.map((s, i) => (
-          <div key={s} className="flex items-center gap-1.5">
-            {i > 0 && <div className="h-px w-4 bg-zinc-300" />}
-            <span className={`whitespace-nowrap rounded-md px-2.5 py-1 text-[12px] font-semibold ${
-              i < CURRENT_STAGE ? 'bg-emerald-50 text-emerald-700'
-              : i === CURRENT_STAGE ? 'bg-blue-100 text-blue-700 ring-1 ring-blue-300'
-              : 'bg-surface-sunken text-content-muted'
-            }`}>
-              {i < CURRENT_STAGE && <CheckCircle2 className="mr-1 inline h-3 w-3" />}
-              {i === CURRENT_STAGE && <Circle className="mr-1 inline h-3 w-3 fill-current" />}
-              {s}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      {/* Tabs */}
-      <div className="mt-4 flex gap-0.5 overflow-x-auto text-[13px]">
-        {tabs.map((tab) => {
-          const active = tab.href === pathname || (tab.href.includes('?') === false && pathname === tab.href);
+      {/* Tabs — only 5 essential ones, not 11 */}
+      <div className="mt-4 flex gap-1 px-8 text-[14px]">
+        {TABS.map((tab) => {
+          const href = tab.href.startsWith('?') ? `${base}${tab.href}` : `${base}${tab.href ? `/${tab.href.replace('/', '')}` : ''}`;
+          const isActive = tab.href === '' ? pathname === base : pathname.includes(tab.href.replace('/', ''));
           return (
             <Link
               key={tab.label}
-              href={tab.href}
-              className={`whitespace-nowrap border-b-2 px-3 py-2.5 font-medium transition-colors ${
-                active ? 'border-blue-600 text-blue-700' : 'border-transparent text-content-tertiary hover:text-content-secondary'
+              href={href}
+              className={`rounded-t-lg px-4 py-3 font-medium transition-colors ${
+                isActive ? 'bg-surface-raised border-b-2 border-brand text-brand' : 'text-content-tertiary hover:text-content-secondary'
               }`}
             >
               {tab.label}
-              {tab.count !== undefined && <span className="ml-1 text-[12px] text-content-muted">({tab.count})</span>}
+              {tab.count !== undefined && <span className="ml-1.5 text-[12px] text-content-muted">({tab.count})</span>}
             </Link>
           );
         })}
       </div>
     </div>
-  );
-}
-
-function Chip({ children }: { children: React.ReactNode }): ReactElement {
-  return (
-    <span className="inline-flex items-center rounded-md border border-surface-border bg-surface px-2 py-0.5 text-[12px] text-content-secondary">
-      {children}
-    </span>
   );
 }

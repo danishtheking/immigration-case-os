@@ -4,33 +4,22 @@ import { CaseHeader } from '@/components/case/case-header';
 import { Sparkles, AlertTriangle, Upload } from 'lucide-react';
 
 const PRONGS = [
-  { name: 'Prong 1', label: 'Substantial merit & national importance', score: 92, met: true, evidence: '3 peer-reviewed papers (climate modeling), DOE grant letter, 2 media mentions.' },
-  { name: 'Prong 2', label: 'Well positioned to advance', score: 81, met: true, evidence: 'Citations (94), H-index 8, record of adoption, employer support.' },
-  { name: 'Prong 3', label: 'Balance favors waiver', score: 68, met: false, evidence: 'Needs: comparable-worker scarcity evidence + expanded national-impact narrative.' },
+  { name: 'Prong 1', label: 'Substantial merit & national importance', score: 92, met: true, detail: '3 peer-reviewed papers, DOE grant letter, 2 media mentions.' },
+  { name: 'Prong 2', label: 'Well positioned to advance', score: 81, met: true, detail: '94 citations, H-index 8, adoption record, employer support.' },
+  { name: 'Prong 3', label: 'Balance favors waiver', score: 68, met: false, detail: 'Needs comparable-worker scarcity evidence.' },
 ];
 
 const TASKS = [
   { done: true, text: 'Draft I-140' },
-  { done: false, text: 'Request 2 more recommender letters' },
-  { done: false, text: 'Finalize cover brief (AI draft ready)' },
-  { done: false, text: 'Assemble exhibits A-N' },
+  { done: false, text: 'Request 2 recommender letters' },
+  { done: false, text: 'Finalize cover brief' },
   { done: false, text: 'Attorney sign-off' },
 ];
 
 const DEADLINES = [
-  { label: 'Premium processing filing', date: 'Apr 24', urgent: true },
-  { label: 'Recommender letter #4', date: 'May 02', urgent: false },
-  { label: 'Exhibit package freeze', date: 'May 06', urgent: false },
-];
-
-const DOCUMENTS = [
-  { name: 'CV', count: 1, color: 'bg-surface-sunken text-content-secondary' },
-  { name: 'Publications', count: 7, color: 'bg-blue-50 text-blue-700' },
-  { name: 'Citations', count: 3, color: 'bg-cyan-50 text-cyan-700' },
-  { name: 'Recs', count: 4, color: 'bg-indigo-50 text-indigo-700' },
-  { name: 'Media', count: 2, color: 'bg-violet-50 text-violet-700' },
-  { name: 'Awards', count: 1, color: 'bg-amber-50 text-amber-700' },
-  { name: 'Other', count: 20, color: 'bg-surface text-content-tertiary' },
+  { label: 'RFE response', date: 'Apr 24', urgent: true },
+  { label: 'Recommender letter', date: 'May 02' },
+  { label: 'Exhibit freeze', date: 'May 06' },
 ];
 
 export default function CaseDetailPage(): ReactElement {
@@ -40,91 +29,95 @@ export default function CaseDetailPage(): ReactElement {
       <main className="flex-1 overflow-y-auto">
         <CaseHeader caseId="1" />
 
-        <div className="grid grid-cols-3 gap-4 p-6">
-          {/* Left: Criteria */}
-          <div className="col-span-2 space-y-4">
-            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
-              <div className="flex items-center justify-between">
-                <h2 className="text-sm font-semibold text-content">Dhanasar prongs</h2>
-                <span className="text-[12px] text-content-muted">re-scored on each upload</span>
-              </div>
-              <div className="mt-5 space-y-5">
+        <div className="grid grid-cols-3 gap-6 px-8 py-7">
+
+          {/* Left: Eligibility — the main focus */}
+          <div className="col-span-2">
+            <section className="card-elevated p-6">
+              <h2 className="text-subheading text-content">Dhanasar prongs</h2>
+              <p className="mt-1 text-caption">Re-scored automatically on each document upload</p>
+
+              <div className="mt-6 space-y-6">
                 {PRONGS.map((p) => (
                   <div key={p.name}>
                     <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-[13px] font-semibold text-content">{p.name}</span>
-                        <span className="ml-2 text-[13px] text-content-tertiary">{p.label}</span>
-                      </div>
-                      <span className={`rounded-md px-2 py-0.5 text-[12px] font-semibold ${p.met ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+                      <p className="text-[15px] font-semibold text-content">
+                        <span className="text-content-tertiary">{p.name}</span> {p.label}
+                      </p>
+                      <span className={`badge ${p.met ? 'badge-success' : 'badge-warning'}`}>
                         {p.met ? 'Met' : 'Partial'} · {p.score}%
                       </span>
                     </div>
-                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface-sunken">
-                      <div className={`h-full rounded-full ${p.met ? 'bg-emerald-500' : 'bg-amber-400'}`} style={{ width: `${p.score}%` }} />
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-surface-sunken">
+                      <div className={`h-full rounded-full transition-all ${p.met ? 'bg-success' : 'bg-warning'}`} style={{ width: `${p.score}%` }} />
                     </div>
-                    <p className="mt-1.5 text-[12px] text-content-tertiary">{p.evidence}</p>
+                    <p className="mt-2 text-body">{p.detail}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-5 rounded-lg border border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 p-4">
-                <div className="flex items-start gap-2">
-                  <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
+              {/* AI suggestion — prominent but not overwhelming */}
+              <div className="mt-6 rounded-[14px] border border-brand/20 bg-brand-lighter p-5">
+                <div className="flex items-start gap-3">
+                  <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
                   <div>
-                    <p className="text-[13px] font-semibold text-blue-900">AI suggestion</p>
-                    <p className="mt-1 text-[12px] text-blue-800">
-                      Add a declaration from Dr. K. Novak (coauthor at NREL) and the 2025 DOE workforce gap report. Projected Prong 3: <span className="font-bold">68% → 82%</span>, overall: <span className="font-bold">84 → 89</span>.
+                    <p className="text-[15px] font-semibold text-brand-dark">AI suggestion</p>
+                    <p className="mt-1.5 text-[14px] leading-relaxed text-brand-dark/80">
+                      Add a declaration from Dr. K. Novak and the 2025 DOE workforce gap report.
+                      Prong 3 would improve from <strong>68% → 82%</strong>, overall score <strong>84 → 89</strong>.
                     </p>
-                    <button className="mt-2 rounded-md bg-blue-600 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-blue-500">Accept suggestions</button>
+                    <button className="mt-3 rounded-[10px] bg-brand px-4 py-2.5 text-[13px] font-semibold text-white shadow-sm shadow-brand/20 hover:bg-brand-light">
+                      Accept suggestions
+                    </button>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5 text-[12px] text-amber-800">
-                <AlertTriangle className="mr-1.5 inline h-3.5 w-3.5" />
-                <span className="font-semibold">DRAFT</span> — Requires attorney review before sharing with client.
+              {/* Attorney review ribbon */}
+              <div className="mt-4 flex items-center gap-2 rounded-[10px] bg-warning-light border border-warning/20 px-5 py-3">
+                <AlertTriangle className="h-4 w-4 text-warning" />
+                <p className="text-[13px] font-medium text-warning">DRAFT — Requires attorney review before sharing with client</p>
               </div>
-            </div>
+            </section>
           </div>
 
-          {/* Right */}
-          <div className="space-y-4">
-            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
-              <h3 className="text-[13px] font-semibold text-content">Next actions</h3>
-              <ul className="mt-3 space-y-2.5">
+          {/* Right: Tasks + Deadlines — clean sidebar */}
+          <div className="space-y-5">
+            {/* Tasks */}
+            <section className="card-elevated p-6">
+              <h3 className="text-subheading text-content">Next actions</h3>
+              <ul className="mt-4 space-y-3">
                 {TASKS.map((t) => (
-                  <li key={t.text} className="flex items-start gap-2.5">
-                    <input type="checkbox" defaultChecked={t.done} className="mt-0.5 rounded border-surface-border-hover" />
-                    <span className={`text-[13px] ${t.done ? 'text-content-muted line-through' : 'text-content-secondary'}`}>{t.text}</span>
+                  <li key={t.text} className="flex items-start gap-3">
+                    <input type="checkbox" defaultChecked={t.done} className="mt-0.5 h-4 w-4 rounded border-surface-border-hover" />
+                    <span className={`text-[14px] ${t.done ? 'text-content-muted line-through' : 'text-content'}`}>{t.text}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
 
-            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
-              <h3 className="text-[13px] font-semibold text-content">Deadlines</h3>
-              <ul className="mt-3 space-y-2">
+            {/* Deadlines */}
+            <section className="card-elevated p-6">
+              <h3 className="text-subheading text-content">Deadlines</h3>
+              <ul className="mt-4 space-y-3">
                 {DEADLINES.map((d) => (
                   <li key={d.label} className="flex items-center justify-between">
-                    <span className="text-[13px] text-content-secondary">{d.label}</span>
-                    <span className={`text-[13px] font-medium ${d.urgent ? 'text-red-600' : 'text-content-secondary'}`}>{d.date}</span>
+                    <span className="text-[14px] text-content-secondary">{d.label}</span>
+                    <span className={`text-[14px] font-semibold ${d.urgent ? 'text-danger' : 'text-content'}`}>{d.date}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
 
-            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-[13px] font-semibold text-content">Documents (38)</h3>
-                <button className="rounded-md border border-surface-border p-1.5 text-content-muted hover:bg-surface"><Upload className="h-3.5 w-3.5" /></button>
-              </div>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {DOCUMENTS.map((d) => (
-                  <span key={d.name} className={`rounded-md px-2 py-1 text-[12px] font-medium ${d.color}`}>{d.name} ({d.count})</span>
-                ))}
-              </div>
-            </div>
+            {/* Quick stats */}
+            <section className="card-elevated p-6">
+              <h3 className="text-subheading text-content">Documents</h3>
+              <p className="mt-1 text-[28px] font-bold text-content">38</p>
+              <p className="text-caption">All classified by AI</p>
+              <button className="mt-3 flex w-full items-center justify-center gap-2 rounded-[10px] border border-surface-border py-2.5 text-[13px] font-medium text-content-secondary hover:bg-surface-sunken">
+                <Upload className="h-4 w-4" /> Upload more
+              </button>
+            </section>
           </div>
         </div>
       </main>
