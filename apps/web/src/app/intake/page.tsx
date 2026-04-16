@@ -218,12 +218,18 @@ function StepOne({
 
 /* ── Step 2: Contact info ──────────────────────────────────────────── */
 
+interface FormData {
+  firstName: string; lastName: string; email: string; phone: string;
+  country: string; currentStatus: string; linkedinUrl: string;
+  [key: string]: string;
+}
+
 function StepTwo({
   form,
   onChange,
 }: {
-  form: typeof import('./page').default extends (...a: never[]) => never ? never : Record<string, string>;
-  onChange: (v: Record<string, string>) => void;
+  form: FormData;
+  onChange: (v: FormData) => void;
 }): ReactElement {
   const set = (key: string, val: string) => onChange({ ...form, [key]: val });
 
@@ -257,8 +263,8 @@ function StepThree({
   file,
   onFileChange,
 }: {
-  form: Record<string, string>;
-  onChange: (v: Record<string, string>) => void;
+  form: FormData;
+  onChange: (v: FormData) => void;
   file: File | null;
   onFileChange: (f: File | null) => void;
 }): ReactElement {
