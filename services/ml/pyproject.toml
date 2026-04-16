@@ -1,0 +1,31 @@
+[project]
+name = "ico-ml"
+version = "0.0.1"
+description = "Immigration Case OS — ML / RAG service (OCR, classification, embeddings, memo generation)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.9.0",
+    "psycopg[binary]>=3.2.0",
+    "anthropic>=0.40.0",
+    "openai>=1.55.0",
+    "python-dotenv>=1.0.1",
+    "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.7.0",
+    "mypy>=1.13.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true

@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ico-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app_admin
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: immcaseos
+    ports:
+      - "5432:5432"
+    volumes:
+      - ico-pgdata:/var/lib/postgresql/data
+      - ./packages/db/init/00-roles.sql:/docker-entrypoint-initdb.d/00-roles.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app_admin -d immcaseos"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  inngest:
+    image: inngest/inngest:latest
+    container_name: ico-inngest
+    restart: unless-stopped
+    command: ["inngest", "dev", "-u", "http://host.docker.internal:4000/api/inngest"]
+    ports:
+      - "8288:8288"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  ico-pgdata:

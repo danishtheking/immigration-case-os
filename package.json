@@ -1,0 +1,33 @@
+{
+  "name": "immigration-case-os",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Multi-tenant SaaS operating system for U.S. immigration law firms",
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@10.30.3",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:isolation": "tsx scripts/ops/cross-tenant-test.ts",
+    "db:migrate": "pnpm --filter @ico/db migrate",
+    "db:push": "pnpm --filter @ico/db push",
+    "db:studio": "pnpm --filter @ico/db studio",
+    "db:seed": "tsx scripts/seed/seed.ts",
+    "compose:up": "docker compose up -d",
+    "compose:down": "docker compose down",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.0",
+    "turbo": "^2.5.0",
+    "typescript": "^5.6.2"
+  }
+}

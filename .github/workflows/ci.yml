@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  PNPM_VERSION: '10.30.3'
+  NODE_VERSION: '20'
+
+jobs:
+  lint-typecheck-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        env:
+          # Build-only placeholders. Real keys come from Doppler at deploy time.
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_YnVpbGQtcGxhY2Vob2xkZXIuY2xlcmsuYWNjb3VudHMuZGV2JA
+          CLERK_SECRET_KEY: sk_test_clerk-placeholder-for-build-only
+        run: pnpm build
+
+  cross-tenant-isolation:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: app_admin
+          POSTGRES_PASSWORD: dev
+          POSTGRES_DB: immcaseos
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U app_admin -d immcaseos"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Bootstrap roles + extensions
+        env:
+          PGPASSWORD: dev
+        run: |
+          psql -h localhost -U app_admin -d immcaseos -c "CREATE EXTENSION IF NOT EXISTS vector;"
+          psql -h localhost -U app_admin -d immcaseos -c "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";"
+          psql -h localhost -U app_admin -d immcaseos -c "CREATE ROLE app_tenant LOGIN PASSWORD 'dev';"
+          psql -h localhost -U app_admin -d immcaseos -c "GRANT CONNECT ON DATABASE immcaseos TO app_tenant;"
+          psql -h localhost -U app_admin -d immcaseos -c "GRANT USAGE ON SCHEMA public TO app_tenant;"
+
+      - name: Apply migrations + RLS + audit triggers
+        env:
+          DATABASE_URL: postgres://app_admin:dev@localhost:5432/immcaseos
+          DATABASE_URL_ADMIN: postgres://app_admin:dev@localhost:5432/immcaseos
+        run: pnpm db:migrate
+
+      - name: Cross-tenant isolation test
+        env:
+          DATABASE_URL_ADMIN: postgres://app_admin:dev@localhost:5432/immcaseos
+          DATABASE_URL_TENANT: postgres://app_tenant:dev@localhost:5432/immcaseos
+        run: pnpm test:isolation
