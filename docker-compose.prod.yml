@@ -1,0 +1,53 @@
+# Production-stack local development
+# Supabase (Postgres + Auth + Realtime) + Redis + Go services
+#
+# Usage:
+#   docker compose -f docker-compose.prod.yml up -d
+#   Then run Go services locally: cd backend && go run ./cmd/gateway
+
+services:
+  # ── Postgres 16 with pgvector ──
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ico-prod-pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: immigration_case_os
+    ports:
+      - "5433:5432"  # 5433 to avoid conflict with POC's 5432
+    volumes:
+      - ico-prod-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d immigration_case_os"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Redis (caching + pub/sub between services) ──
+  redis:
+    image: redis:7-alpine
+    container_name: ico-prod-redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"  # 6380 to avoid conflicts
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ── Supabase Studio (optional — web UI for the database) ──
+  # Uncomment if you want the Supabase dashboard locally:
+  # supabase-studio:
+  #   image: supabase/studio:latest
+  #   container_name: ico-prod-studio
+  #   ports:
+  #     - "54323:3000"
+  #   environment:
+  #     SUPABASE_URL: http://localhost:8000
+  #     STUDIO_PG_META_URL: http://localhost:5433
+
+volumes:
+  ico-prod-pgdata:
