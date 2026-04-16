@@ -34,12 +34,12 @@ export default async function HomePage(): Promise<ReactElement> {
           <span className="text-sm font-semibold tracking-tight">Immigration Case OS</span>
         </div>
         <div className="flex items-center gap-3">
-          <Link href="/dashboard" className="text-[13px] text-zinc-400 transition-colors hover:text-white">
+          <Link href="/dashboard" className="text-[13px] text-content-muted transition-colors hover:text-white">
             Dashboard
           </Link>
           <Link
             href="/sign-in"
-            className="rounded-lg bg-white px-4 py-2 text-[13px] font-semibold text-zinc-900 transition-colors hover:bg-zinc-200"
+            className="rounded-lg bg-surface-raised px-4 py-2 text-[13px] font-semibold text-content transition-colors hover:bg-surface-sunken"
           >
             Get started
           </Link>
@@ -49,7 +49,7 @@ export default async function HomePage(): Promise<ReactElement> {
       {/* Hero */}
       <div className="mx-auto max-w-6xl px-6 pt-20 pb-16">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900 px-4 py-1.5 text-[12px] text-zinc-400">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-content px-4 py-1.5 text-[12px] text-content-muted">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             Phase 0 · Foundations
           </div>
@@ -59,7 +59,7 @@ export default async function HomePage(): Promise<ReactElement> {
               immigration law firms
             </span>
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-lg text-zinc-400">
+          <p className="mx-auto mt-5 max-w-xl text-lg text-content-muted">
             Case management, AI assessments, legal research, document automation, and an
             autonomous agent — built multi-tenant from day one.
           </p>
@@ -73,7 +73,7 @@ export default async function HomePage(): Promise<ReactElement> {
             </Link>
             <Link
               href="/sign-up"
-              className="rounded-lg border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-500 hover:text-white"
+              className="rounded-lg border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-content-muted transition-colors hover:border-surface-border/300 hover:text-white"
             >
               Create your firm
             </Link>
@@ -128,7 +128,7 @@ export default async function HomePage(): Promise<ReactElement> {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800 py-8 text-center text-[12px] text-zinc-600">
+      <footer className="border-t border-zinc-800 py-8 text-center text-[12px] text-content-secondary">
         Immigration Case OS · Sprint 1 (Phase 0) · StitchBoat Immigration is the first tenant
       </footer>
     </div>
@@ -137,12 +137,12 @@ export default async function HomePage(): Promise<ReactElement> {
 
 function FeatureCard({ icon, title, description }: { icon: ReactElement; title: string; description: string }): ReactElement {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition-colors hover:border-zinc-700">
-      <div className="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-zinc-800 text-zinc-300">
+    <div className="rounded-xl border border-zinc-800 bg-content/50 p-5 transition-colors hover:border-zinc-700">
+      <div className="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-content/90 text-content-muted">
         {icon}
       </div>
       <h3 className="text-[14px] font-semibold text-zinc-200">{title}</h3>
-      <p className="mt-1.5 text-[13px] leading-relaxed text-zinc-500">{description}</p>
+      <p className="mt-1.5 text-[13px] leading-relaxed text-content-tertiary">{description}</p>
     </div>
   );
 }

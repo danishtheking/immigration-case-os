@@ -24,13 +24,13 @@ const DEADLINES = [
 ];
 
 const DOCUMENTS = [
-  { name: 'CV', count: 1, color: 'bg-zinc-100 text-zinc-700' },
+  { name: 'CV', count: 1, color: 'bg-surface-sunken text-content-secondary' },
   { name: 'Publications', count: 7, color: 'bg-blue-50 text-blue-700' },
   { name: 'Citations', count: 3, color: 'bg-cyan-50 text-cyan-700' },
   { name: 'Recs', count: 4, color: 'bg-indigo-50 text-indigo-700' },
   { name: 'Media', count: 2, color: 'bg-violet-50 text-violet-700' },
   { name: 'Awards', count: 1, color: 'bg-amber-50 text-amber-700' },
-  { name: 'Other', count: 20, color: 'bg-zinc-50 text-zinc-500' },
+  { name: 'Other', count: 20, color: 'bg-surface text-content-tertiary' },
 ];
 
 export default function CaseDetailPage(): ReactElement {
@@ -43,27 +43,27 @@ export default function CaseDetailPage(): ReactElement {
         <div className="grid grid-cols-3 gap-4 p-6">
           {/* Left: Criteria */}
           <div className="col-span-2 space-y-4">
-            <div className="rounded-xl border border-zinc-200 bg-white p-5">
+            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
               <div className="flex items-center justify-between">
-                <h2 className="text-sm font-semibold text-zinc-900">Dhanasar prongs</h2>
-                <span className="text-[11px] text-zinc-400">re-scored on each upload</span>
+                <h2 className="text-sm font-semibold text-content">Dhanasar prongs</h2>
+                <span className="text-[12px] text-content-muted">re-scored on each upload</span>
               </div>
               <div className="mt-5 space-y-5">
                 {PRONGS.map((p) => (
                   <div key={p.name}>
                     <div className="flex items-center justify-between">
                       <div>
-                        <span className="text-[13px] font-semibold text-zinc-900">{p.name}</span>
-                        <span className="ml-2 text-[13px] text-zinc-500">{p.label}</span>
+                        <span className="text-[13px] font-semibold text-content">{p.name}</span>
+                        <span className="ml-2 text-[13px] text-content-tertiary">{p.label}</span>
                       </div>
-                      <span className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${p.met ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+                      <span className={`rounded-md px-2 py-0.5 text-[12px] font-semibold ${p.met ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
                         {p.met ? 'Met' : 'Partial'} · {p.score}%
                       </span>
                     </div>
-                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-zinc-100">
+                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface-sunken">
                       <div className={`h-full rounded-full ${p.met ? 'bg-emerald-500' : 'bg-amber-400'}`} style={{ width: `${p.score}%` }} />
                     </div>
-                    <p className="mt-1.5 text-[12px] text-zinc-500">{p.evidence}</p>
+                    <p className="mt-1.5 text-[12px] text-content-tertiary">{p.evidence}</p>
                   </div>
                 ))}
               </div>
@@ -76,7 +76,7 @@ export default function CaseDetailPage(): ReactElement {
                     <p className="mt-1 text-[12px] text-blue-800">
                       Add a declaration from Dr. K. Novak (coauthor at NREL) and the 2025 DOE workforce gap report. Projected Prong 3: <span className="font-bold">68% → 82%</span>, overall: <span className="font-bold">84 → 89</span>.
                     </p>
-                    <button className="mt-2 rounded-md bg-blue-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-blue-500">Accept suggestions</button>
+                    <button className="mt-2 rounded-md bg-blue-600 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-blue-500">Accept suggestions</button>
                   </div>
                 </div>
               </div>
@@ -90,38 +90,38 @@ export default function CaseDetailPage(): ReactElement {
 
           {/* Right */}
           <div className="space-y-4">
-            <div className="rounded-xl border border-zinc-200 bg-white p-5">
-              <h3 className="text-[13px] font-semibold text-zinc-900">Next actions</h3>
+            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
+              <h3 className="text-[13px] font-semibold text-content">Next actions</h3>
               <ul className="mt-3 space-y-2.5">
                 {TASKS.map((t) => (
                   <li key={t.text} className="flex items-start gap-2.5">
-                    <input type="checkbox" defaultChecked={t.done} className="mt-0.5 rounded border-zinc-300" />
-                    <span className={`text-[13px] ${t.done ? 'text-zinc-400 line-through' : 'text-zinc-700'}`}>{t.text}</span>
+                    <input type="checkbox" defaultChecked={t.done} className="mt-0.5 rounded border-surface-border-hover" />
+                    <span className={`text-[13px] ${t.done ? 'text-content-muted line-through' : 'text-content-secondary'}`}>{t.text}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-xl border border-zinc-200 bg-white p-5">
-              <h3 className="text-[13px] font-semibold text-zinc-900">Deadlines</h3>
+            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
+              <h3 className="text-[13px] font-semibold text-content">Deadlines</h3>
               <ul className="mt-3 space-y-2">
                 {DEADLINES.map((d) => (
                   <li key={d.label} className="flex items-center justify-between">
-                    <span className="text-[13px] text-zinc-600">{d.label}</span>
-                    <span className={`text-[13px] font-medium ${d.urgent ? 'text-red-600' : 'text-zinc-700'}`}>{d.date}</span>
+                    <span className="text-[13px] text-content-secondary">{d.label}</span>
+                    <span className={`text-[13px] font-medium ${d.urgent ? 'text-red-600' : 'text-content-secondary'}`}>{d.date}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-xl border border-zinc-200 bg-white p-5">
+            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
               <div className="flex items-center justify-between">
-                <h3 className="text-[13px] font-semibold text-zinc-900">Documents (38)</h3>
-                <button className="rounded-md border border-zinc-200 p-1.5 text-zinc-400 hover:bg-zinc-50"><Upload className="h-3.5 w-3.5" /></button>
+                <h3 className="text-[13px] font-semibold text-content">Documents (38)</h3>
+                <button className="rounded-md border border-surface-border p-1.5 text-content-muted hover:bg-surface"><Upload className="h-3.5 w-3.5" /></button>
               </div>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {DOCUMENTS.map((d) => (
-                  <span key={d.name} className={`rounded-md px-2 py-1 text-[11px] font-medium ${d.color}`}>{d.name} ({d.count})</span>
+                  <span key={d.name} className={`rounded-md px-2 py-1 text-[12px] font-medium ${d.color}`}>{d.name} ({d.count})</span>
                 ))}
               </div>
             </div>

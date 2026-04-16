@@ -25,7 +25,7 @@ export function Topbar({ firstName, previewMode }: TopbarProps): ReactElement {
 
       <div className="flex items-center gap-3">
         {previewMode && (
-          <span className="rounded-full border border-warning/30 bg-warning-light px-3 py-1 text-[11px] font-semibold text-warning">
+          <span className="rounded-full border border-warning/30 bg-warning-light px-3 py-1 text-[12px] font-semibold text-warning">
             Preview mode
           </span>
         )}
@@ -33,7 +33,7 @@ export function Topbar({ firstName, previewMode }: TopbarProps): ReactElement {
         <div className="flex items-center gap-1 rounded-[10px] border border-surface-border bg-surface px-3.5 py-2 text-content-tertiary transition-colors hover:border-surface-border-hover">
           <Search className="h-4 w-4" />
           <span className="ml-1 text-[13px]">Search</span>
-          <kbd className="ml-6 rounded-[5px] border border-surface-border bg-surface-raised px-1.5 py-0.5 text-[10px] text-content-muted">/</kbd>
+          <kbd className="ml-6 rounded-[5px] border border-surface-border bg-surface-raised px-1.5 py-0.5 text-[12px] text-content-muted">/</kbd>
         </div>
 
         <button className="relative rounded-[10px] border border-surface-border p-2.5 text-content-tertiary transition-colors hover:border-surface-border-hover hover:text-content">

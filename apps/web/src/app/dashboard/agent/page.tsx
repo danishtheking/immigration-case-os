@@ -59,22 +59,22 @@ export default function AgentPage(): ReactElement {
   return (
     <>
       {toast && (
-        <div className="fixed bottom-4 right-4 z-50 animate-in rounded-lg border border-zinc-200 bg-white px-4 py-3 shadow-lg">
-          <p className="text-[13px] font-medium text-zinc-900">{toast}</p>
+        <div className="fixed bottom-4 right-4 z-50 animate-in rounded-lg border border-surface-border bg-surface-raised px-4 py-3 shadow-lg">
+          <p className="text-[13px] font-medium text-content">{toast}</p>
         </div>
       )}
       <Topbar firstName="Danish" previewMode />
       <main className="flex-1 overflow-y-auto p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-semibold text-zinc-900">Agent Console</h1>
-            <p className="text-[12px] text-zinc-500">Brenda AI · {pendingItems.length} actions pending approval · all outbound drafts require human review</p>
+            <h1 className="text-lg font-semibold text-content">Agent Console</h1>
+            <p className="text-[12px] text-content-tertiary">Brenda AI · {pendingItems.length} actions pending approval · all outbound drafts require human review</p>
           </div>
           <div className="flex items-center gap-2">
-            <button className="flex items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-2 text-[12px] text-zinc-600 hover:bg-zinc-50">
+            <button className="flex items-center gap-1.5 rounded-lg border border-surface-border px-3 py-2 text-[12px] text-content-secondary hover:bg-surface">
               <Settings className="h-3.5 w-3.5" /> Agent policy
             </button>
-            <button className="flex items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-2 text-[12px] text-zinc-600 hover:bg-zinc-50">
+            <button className="flex items-center gap-1.5 rounded-lg border border-surface-border px-3 py-2 text-[12px] text-content-secondary hover:bg-surface">
               <BarChart3 className="h-3.5 w-3.5" /> Eval harness
             </button>
           </div>
@@ -85,35 +85,35 @@ export default function AgentPage(): ReactElement {
           <MiniStat label="Pending approval" value={String(pendingItems.length)} color="text-amber-600" />
           <MiniStat label="Executed today" value="14" color="text-emerald-600" />
           <MiniStat label="Rejected today" value="1" color="text-red-600" />
-          <MiniStat label="UPL blocks" value="0" color="text-zinc-500" />
+          <MiniStat label="UPL blocks" value="0" color="text-content-tertiary" />
         </div>
 
         <div className="mt-5 grid grid-cols-12 gap-4">
           {/* Pending approvals */}
           <div className="col-span-7 space-y-2">
             <div className="flex items-center justify-between">
-              <h2 className="text-[13px] font-semibold text-zinc-900">Pending approvals</h2>
-              <span className="rounded-md bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Blocks outbound</span>
+              <h2 className="text-[13px] font-semibold text-content">Pending approvals</h2>
+              <span className="rounded-md bg-amber-50 px-2 py-0.5 text-[12px] font-semibold text-amber-700">Blocks outbound</span>
             </div>
             {pendingItems.map((item) => (
-              <div key={item.id} className="rounded-xl border border-zinc-200 bg-white p-4 transition-all hover:border-zinc-300 hover:shadow-sm">
+              <div key={item.id} className="rounded-xl border border-surface-border bg-surface-raised p-4 transition-all hover:border-surface-border-hover hover:shadow-sm">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-[13px] font-semibold text-zinc-900">{item.title}</p>
-                    <div className="mt-1 flex items-center gap-2 text-[11px] text-zinc-400">
+                    <p className="text-[13px] font-semibold text-content">{item.title}</p>
+                    <div className="mt-1 flex items-center gap-2 text-[12px] text-content-muted">
                       <span className={`rounded-md px-1.5 py-0.5 font-semibold ${item.typeColor}`}>{item.type}</span>
                       <span>Confidence {(item.confidence * 100).toFixed(0)}%</span>
                       <span>·</span>
                       <span>{item.model}</span>
                     </div>
-                    <p className="mt-1 text-[11px] text-zinc-400">Case: {item.case} · Trigger: {item.trigger}</p>
+                    <p className="mt-1 text-[12px] text-content-muted">Case: {item.case} · Trigger: {item.trigger}</p>
                   </div>
                 </div>
                 <div className="mt-3 flex items-center gap-2">
-                  <button onClick={() => handleApprove(item.id)} className="rounded-md bg-emerald-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-emerald-500">Approve & send</button>
-                  <button className="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-medium text-zinc-600 hover:bg-zinc-50">Edit</button>
-                  <button onClick={() => handleReject(item.id)} className="rounded-md border border-zinc-200 px-3 py-1.5 text-[11px] font-medium text-zinc-600 hover:bg-zinc-50">Reject</button>
-                  <button className="ml-auto text-[11px] text-zinc-400 hover:text-zinc-600">View trace</button>
+                  <button onClick={() => handleApprove(item.id)} className="rounded-md bg-emerald-600 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-emerald-500">Approve & send</button>
+                  <button className="rounded-md border border-surface-border px-3 py-1.5 text-[12px] font-medium text-content-secondary hover:bg-surface">Edit</button>
+                  <button onClick={() => handleReject(item.id)} className="rounded-md border border-surface-border px-3 py-1.5 text-[12px] font-medium text-content-secondary hover:bg-surface">Reject</button>
+                  <button className="ml-auto text-[12px] text-content-muted hover:text-content-secondary">View trace</button>
                 </div>
               </div>
             ))}
@@ -122,10 +122,10 @@ export default function AgentPage(): ReactElement {
           {/* Right: action trace + recent */}
           <div className="col-span-5 space-y-4">
             {/* Action trace preview */}
-            <div className="rounded-xl border border-zinc-200 bg-white p-5">
-              <h3 className="text-[13px] font-semibold text-zinc-900">Action trace</h3>
-              <p className="mt-1 text-[11px] text-zinc-400">Draft email · Sharma recommender ask</p>
-              <pre className="mt-3 overflow-auto rounded-lg bg-zinc-950 p-3 text-[11px] leading-relaxed text-zinc-300">
+            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
+              <h3 className="text-[13px] font-semibold text-content">Action trace</h3>
+              <p className="mt-1 text-[12px] text-content-muted">Draft email · Sharma recommender ask</p>
+              <pre className="mt-3 overflow-auto rounded-lg bg-zinc-950 p-3 text-[12px] leading-relaxed text-content-muted">
 {`{
   "trigger": "case.preparation.missing_recommender",
   "case_id": "NIW-2026-0317",
@@ -142,15 +142,15 @@ export default function AgentPage(): ReactElement {
   "upl_filter": "passed"
 }`}
               </pre>
-              <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-3 text-[11px] text-blue-800">
+              <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-3 text-[12px] text-blue-800">
                 <Shield className="mr-1 inline h-3 w-3" />
                 Guardrails: external recipient → requires human approval. UPL filter passed. PII redacted in log.
               </div>
             </div>
 
             {/* Recent actions */}
-            <div className="rounded-xl border border-zinc-200 bg-white p-5">
-              <h3 className="text-[13px] font-semibold text-zinc-900">Recent actions</h3>
+            <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
+              <h3 className="text-[13px] font-semibold text-content">Recent actions</h3>
               <ul className="mt-3 space-y-3">
                 {recentItems.map((item, i) => {
                   const Icon = item.icon;
@@ -162,8 +162,8 @@ export default function AgentPage(): ReactElement {
                         <Icon className={`h-3 w-3 ${item.status === 'executed' ? 'text-emerald-600' : 'text-red-500'}`} />
                       </div>
                       <div>
-                        <p className="text-[12px] text-zinc-700">{item.title}</p>
-                        <p className="text-[10px] text-zinc-400">{item.time}</p>
+                        <p className="text-[12px] text-content-secondary">{item.title}</p>
+                        <p className="text-[12px] text-content-muted">{item.time}</p>
                       </div>
                     </li>
                   );
@@ -179,8 +179,8 @@ export default function AgentPage(): ReactElement {
 
 function MiniStat({ label, value, color }: { label: string; value: string; color: string }): ReactElement {
   return (
-    <div className="rounded-lg border border-zinc-200 bg-white px-4 py-3">
-      <p className="text-[11px] text-zinc-500">{label}</p>
+    <div className="rounded-lg border border-surface-border bg-surface-raised px-4 py-3">
+      <p className="text-[12px] text-content-tertiary">{label}</p>
       <p className={`text-xl font-bold ${color}`}>{value}</p>
     </div>
   );

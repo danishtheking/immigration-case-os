@@ -85,7 +85,7 @@ function Dashboard({ firstName }: { firstName: string }): ReactElement {
           <section className="col-span-4 card-elevated p-6">
             <div className="flex items-center justify-between">
               <h2 className="text-subheading text-content">Agent activity</h2>
-              <span className="flex items-center gap-1.5 rounded-full bg-success-light px-2.5 py-1 text-[11px] font-semibold text-success">
+              <span className="flex items-center gap-1.5 rounded-full bg-success-light px-2.5 py-1 text-[12px] font-semibold text-success">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
                 Live
               </span>

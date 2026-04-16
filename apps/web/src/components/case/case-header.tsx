@@ -51,16 +51,16 @@ export function CaseHeader({ caseId = '1' }: { caseId?: string }): ReactElement 
   const tabs = getTabs(caseId);
 
   return (
-    <div className="border-b border-zinc-200 bg-white px-6 pt-4 pb-0">
-      <Link href="/dashboard/cases" className="mb-3 inline-flex items-center gap-1 text-[12px] text-zinc-500 hover:text-zinc-700">
+    <div className="border-b border-surface-border bg-surface-raised px-6 pt-4 pb-0">
+      <Link href="/dashboard/cases" className="mb-3 inline-flex items-center gap-1 text-[12px] text-content-tertiary hover:text-content-secondary">
         <ArrowLeft className="h-3 w-3" /> Back to cases
       </Link>
 
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-[11px] text-zinc-400">Case · {DEMO.caseNumber}</p>
-          <h1 className="text-xl font-bold text-zinc-900">{DEMO.client}</h1>
-          <p className="text-[13px] text-zinc-500">{DEMO.type} · {DEMO.framework}</p>
+          <p className="text-[12px] text-content-muted">Case · {DEMO.caseNumber}</p>
+          <h1 className="text-xl font-bold text-content">{DEMO.client}</h1>
+          <p className="text-[13px] text-content-tertiary">{DEMO.type} · {DEMO.framework}</p>
           <div className="mt-2.5 flex flex-wrap gap-1.5">
             <Chip>Attorney: {DEMO.attorney}</Chip>
             <Chip>Case mgr: {DEMO.caseManager}</Chip>
@@ -69,9 +69,9 @@ export function CaseHeader({ caseId = '1' }: { caseId?: string }): ReactElement 
           </div>
         </div>
         <div className="text-right">
-          <p className="text-[11px] text-zinc-400">Eligibility score</p>
+          <p className="text-[12px] text-content-muted">Eligibility score</p>
           <p className="text-4xl font-black text-emerald-600">{DEMO.score}</p>
-          <p className="text-[11px] text-zinc-400">{DEMO.scoreLabel} · {DEMO.modelVersion}</p>
+          <p className="text-[12px] text-content-muted">{DEMO.scoreLabel} · {DEMO.modelVersion}</p>
         </div>
       </div>
 
@@ -80,10 +80,10 @@ export function CaseHeader({ caseId = '1' }: { caseId?: string }): ReactElement 
         {STAGES.map((s, i) => (
           <div key={s} className="flex items-center gap-1.5">
             {i > 0 && <div className="h-px w-4 bg-zinc-300" />}
-            <span className={`whitespace-nowrap rounded-md px-2.5 py-1 text-[11px] font-semibold ${
+            <span className={`whitespace-nowrap rounded-md px-2.5 py-1 text-[12px] font-semibold ${
               i < CURRENT_STAGE ? 'bg-emerald-50 text-emerald-700'
               : i === CURRENT_STAGE ? 'bg-blue-100 text-blue-700 ring-1 ring-blue-300'
-              : 'bg-zinc-100 text-zinc-400'
+              : 'bg-surface-sunken text-content-muted'
             }`}>
               {i < CURRENT_STAGE && <CheckCircle2 className="mr-1 inline h-3 w-3" />}
               {i === CURRENT_STAGE && <Circle className="mr-1 inline h-3 w-3 fill-current" />}
@@ -102,11 +102,11 @@ export function CaseHeader({ caseId = '1' }: { caseId?: string }): ReactElement 
               key={tab.label}
               href={tab.href}
               className={`whitespace-nowrap border-b-2 px-3 py-2.5 font-medium transition-colors ${
-                active ? 'border-blue-600 text-blue-700' : 'border-transparent text-zinc-500 hover:text-zinc-700'
+                active ? 'border-blue-600 text-blue-700' : 'border-transparent text-content-tertiary hover:text-content-secondary'
               }`}
             >
               {tab.label}
-              {tab.count !== undefined && <span className="ml-1 text-[11px] text-zinc-400">({tab.count})</span>}
+              {tab.count !== undefined && <span className="ml-1 text-[12px] text-content-muted">({tab.count})</span>}
             </Link>
           );
         })}
@@ -117,7 +117,7 @@ export function CaseHeader({ caseId = '1' }: { caseId?: string }): ReactElement 
 
 function Chip({ children }: { children: React.ReactNode }): ReactElement {
   return (
-    <span className="inline-flex items-center rounded-md border border-zinc-200 bg-zinc-50 px-2 py-0.5 text-[11px] text-zinc-600">
+    <span className="inline-flex items-center rounded-md border border-surface-border bg-surface px-2 py-0.5 text-[12px] text-content-secondary">
       {children}
     </span>
   );

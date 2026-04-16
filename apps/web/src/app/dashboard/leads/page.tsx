@@ -62,13 +62,13 @@ export default function LeadsPage(): ReactElement {
     <>
       <Topbar firstName="Danish" previewMode />
       <main className="flex-1 overflow-hidden">
-        <div className="border-b border-zinc-200 bg-white px-6 py-4">
+        <div className="border-b border-surface-border bg-surface-raised px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-lg font-semibold text-zinc-900">Leads pipeline</h1>
-              <p className="text-[12px] text-zinc-500">{totalLeads} leads · drag cards between columns to update status</p>
+              <h1 className="text-lg font-semibold text-content">Leads pipeline</h1>
+              <p className="text-[12px] text-content-tertiary">{totalLeads} leads · drag cards between columns to update status</p>
             </div>
-            <button className="flex items-center gap-1.5 rounded-lg bg-zinc-900 px-3 py-2 text-[12px] font-medium text-white hover:bg-zinc-800">
+            <button className="flex items-center gap-1.5 rounded-lg bg-content px-3 py-2 text-[12px] font-medium text-white hover:bg-content/90">
               <Plus className="h-3.5 w-3.5" /> Add lead
             </button>
           </div>
@@ -82,44 +82,44 @@ export default function LeadsPage(): ReactElement {
               <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className={`h-2 w-2 rounded-full ${col.color}`} />
-                  <span className="text-[13px] font-semibold text-zinc-900">{col.title}</span>
-                  <span className="grid h-5 w-5 place-items-center rounded-full bg-zinc-100 text-[10px] font-bold text-zinc-500">
+                  <span className="text-[13px] font-semibold text-content">{col.title}</span>
+                  <span className="grid h-5 w-5 place-items-center rounded-full bg-surface-sunken text-[12px] font-bold text-content-tertiary">
                     {col.leads.length}
                   </span>
                 </div>
-                <button className="text-zinc-400 hover:text-zinc-600"><MoreHorizontal className="h-4 w-4" /></button>
+                <button className="text-content-muted hover:text-content-secondary"><MoreHorizontal className="h-4 w-4" /></button>
               </div>
 
               {/* Cards */}
               <div className="flex-1 space-y-2">
                 {col.leads.map((lead) => (
-                  <div key={lead.id} className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+                  <div key={lead.id} className="rounded-xl border border-surface-border bg-surface-raised p-4 shadow-sm transition-shadow hover:shadow-md">
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-[13px] font-semibold text-zinc-900">{lead.name}</p>
-                        <p className="text-[11px] text-zinc-400">{lead.country} · {lead.interest}</p>
+                        <p className="text-[13px] font-semibold text-content">{lead.name}</p>
+                        <p className="text-[12px] text-content-muted">{lead.country} · {lead.interest}</p>
                       </div>
                       {lead.score && (
-                        <span className={`rounded-md px-1.5 py-0.5 text-[11px] font-bold ${lead.score >= 75 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+                        <span className={`rounded-md px-1.5 py-0.5 text-[12px] font-bold ${lead.score >= 75 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
                           {lead.score}
                         </span>
                       )}
                     </div>
                     <div className="mt-3 flex items-center justify-between">
-                      <div className="flex items-center gap-1 text-[11px] text-zinc-400">
+                      <div className="flex items-center gap-1 text-[12px] text-content-muted">
                         <Clock className="h-3 w-3" />
                         {lead.daysAgo}d ago · {lead.source}
                       </div>
                       <div className="flex gap-1">
-                        <button className="rounded-md p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600"><Mail className="h-3.5 w-3.5" /></button>
-                        <button className="rounded-md p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600"><Phone className="h-3.5 w-3.5" /></button>
+                        <button className="rounded-md p-1 text-content-muted hover:bg-surface-sunken hover:text-content-secondary"><Mail className="h-3.5 w-3.5" /></button>
+                        <button className="rounded-md p-1 text-content-muted hover:bg-surface-sunken hover:text-content-secondary"><Phone className="h-3.5 w-3.5" /></button>
                       </div>
                     </div>
                   </div>
                 ))}
 
                 {/* Add card */}
-                <button className="w-full rounded-xl border border-dashed border-zinc-300 py-3 text-[12px] text-zinc-400 transition-colors hover:border-zinc-400 hover:text-zinc-600">
+                <button className="w-full rounded-xl border border-dashed border-surface-border-hover py-3 text-[12px] text-content-muted transition-colors hover:border-zinc-400 hover:text-content-secondary">
                   + Add lead
                 </button>
               </div>

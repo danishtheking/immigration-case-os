@@ -19,12 +19,12 @@ export default function BillingPage(): ReactElement {
       <main className="flex-1 overflow-y-auto p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-semibold text-zinc-900">Trust & Billing</h1>
-            <p className="text-[12px] text-zinc-500">IOLTA-aware ledger · Stripe + Airwallex · installment tracking</p>
+            <h1 className="text-lg font-semibold text-content">Trust & Billing</h1>
+            <p className="text-[12px] text-content-tertiary">IOLTA-aware ledger · Stripe + Airwallex · installment tracking</p>
           </div>
           <div className="flex items-center gap-2">
-            <button className="flex items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-2 text-[12px] text-zinc-600 hover:bg-zinc-50"><Download className="h-3.5 w-3.5" /> Export</button>
-            <button className="flex items-center gap-1.5 rounded-lg bg-zinc-900 px-3 py-2 text-[12px] font-medium text-white hover:bg-zinc-800"><Plus className="h-3.5 w-3.5" /> New invoice</button>
+            <button className="flex items-center gap-1.5 rounded-lg border border-surface-border px-3 py-2 text-[12px] text-content-secondary hover:bg-surface"><Download className="h-3.5 w-3.5" /> Export</button>
+            <button className="flex items-center gap-1.5 rounded-lg bg-content px-3 py-2 text-[12px] font-medium text-white hover:bg-content/90"><Plus className="h-3.5 w-3.5" /> New invoice</button>
           </div>
         </div>
 
@@ -37,19 +37,19 @@ export default function BillingPage(): ReactElement {
         </div>
 
         {/* Transactions table */}
-        <div className="mt-5 rounded-xl border border-zinc-200 bg-white">
-          <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-4">
-            <h2 className="text-[13px] font-semibold text-zinc-900">Trust ledger</h2>
-            <div className="flex gap-1 text-[11px]">
-              <button className="rounded-md bg-zinc-900 px-2.5 py-1 font-medium text-white">All</button>
-              <button className="rounded-md px-2.5 py-1 text-zinc-500 hover:bg-zinc-100">Deposits</button>
-              <button className="rounded-md px-2.5 py-1 text-zinc-500 hover:bg-zinc-100">Disbursements</button>
-              <button className="rounded-md px-2.5 py-1 text-zinc-500 hover:bg-zinc-100">Invoices</button>
+        <div className="mt-5 rounded-xl border border-surface-border bg-surface-raised">
+          <div className="flex items-center justify-between border-b border-surface-border/50 px-5 py-4">
+            <h2 className="text-[13px] font-semibold text-content">Trust ledger</h2>
+            <div className="flex gap-1 text-[12px]">
+              <button className="rounded-md bg-content px-2.5 py-1 font-medium text-white">All</button>
+              <button className="rounded-md px-2.5 py-1 text-content-tertiary hover:bg-surface-sunken">Deposits</button>
+              <button className="rounded-md px-2.5 py-1 text-content-tertiary hover:bg-surface-sunken">Disbursements</button>
+              <button className="rounded-md px-2.5 py-1 text-content-tertiary hover:bg-surface-sunken">Invoices</button>
             </div>
           </div>
           <table className="w-full">
             <thead>
-              <tr className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
+              <tr className="text-[12px] font-semibold uppercase tracking-wider text-content-muted">
                 <th className="px-5 py-2.5 text-left">Date</th>
                 <th className="px-5 py-2.5 text-left">Client</th>
                 <th className="px-5 py-2.5 text-left">Type</th>
@@ -61,19 +61,19 @@ export default function BillingPage(): ReactElement {
             </thead>
             <tbody className="text-[13px]">
               {TRANSACTIONS.map((t, i) => (
-                <tr key={i} className="border-t border-zinc-50 transition-colors hover:bg-zinc-50/50">
-                  <td className="px-5 py-3 text-zinc-500">{t.date}</td>
-                  <td className="px-5 py-3 font-medium text-zinc-900">{t.client}</td>
-                  <td className="px-5 py-3"><span className={`rounded-md px-2 py-0.5 text-[10px] font-semibold ${t.typeColor}`}>{t.type}</span></td>
-                  <td className="px-5 py-3 text-zinc-600">{t.description}</td>
+                <tr key={i} className="border-t border-surface-border/30 transition-colors hover:bg-surface/50">
+                  <td className="px-5 py-3 text-content-tertiary">{t.date}</td>
+                  <td className="px-5 py-3 font-medium text-content">{t.client}</td>
+                  <td className="px-5 py-3"><span className={`rounded-md px-2 py-0.5 text-[12px] font-semibold ${t.typeColor}`}>{t.type}</span></td>
+                  <td className="px-5 py-3 text-content-secondary">{t.description}</td>
                   <td className={`px-5 py-3 text-right font-medium ${t.amount.startsWith('+') ? 'text-emerald-600' : 'text-red-600'}`}>
                     <span className="inline-flex items-center gap-1">
                       {t.amount.startsWith('+') ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
                       {t.amount}
                     </span>
                   </td>
-                  <td className="px-5 py-3 text-center text-[11px] text-zinc-400">{t.fx}</td>
-                  <td className="px-5 py-3 text-right font-medium text-zinc-700">{t.balance}</td>
+                  <td className="px-5 py-3 text-center text-[12px] text-content-muted">{t.fx}</td>
+                  <td className="px-5 py-3 text-right font-medium text-content-secondary">{t.balance}</td>
                 </tr>
               ))}
             </tbody>
@@ -92,13 +92,13 @@ export default function BillingPage(): ReactElement {
 
 function BillingCard({ label, value, sub, icon, urgent, good }: { label: string; value: string; sub: string; icon: ReactElement; urgent?: boolean; good?: boolean }): ReactElement {
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-4">
+    <div className="rounded-xl border border-surface-border bg-surface-raised p-4">
       <div className="flex items-center justify-between">
-        <p className="text-[12px] font-medium text-zinc-500">{label}</p>
-        <div className="grid h-8 w-8 place-items-center rounded-lg bg-zinc-50 text-zinc-400">{icon}</div>
+        <p className="text-[12px] font-medium text-content-tertiary">{label}</p>
+        <div className="grid h-8 w-8 place-items-center rounded-lg bg-surface text-content-muted">{icon}</div>
       </div>
-      <p className={`mt-2 text-2xl font-bold ${urgent ? 'text-red-600' : 'text-zinc-900'}`}>{value}</p>
-      <p className={`mt-1 text-[11px] ${good ? 'text-emerald-600' : 'text-zinc-400'}`}>{sub}</p>
+      <p className={`mt-2 text-2xl font-bold ${urgent ? 'text-red-600' : 'text-content'}`}>{value}</p>
+      <p className={`mt-1 text-[12px] ${good ? 'text-emerald-600' : 'text-content-muted'}`}>{sub}</p>
     </div>
   );
 }

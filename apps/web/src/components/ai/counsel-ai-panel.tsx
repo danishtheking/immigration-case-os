@@ -340,19 +340,19 @@ export function CounselAiPanel({ open, onClose }: CounselAiPanelProps): ReactEle
   return (
     <>
       <AgentHighlight selector={highlightSelector} label={highlightLabel} />
-      <div className={`fixed right-0 top-0 z-40 flex h-full w-[420px] flex-col border-l border-zinc-200 bg-white shadow-2xl transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed right-0 top-0 z-40 flex h-full w-[420px] flex-col border-l border-surface-border bg-surface-raised shadow-2xl transition-transform duration-300 ${open ? 'translate-x-0' : 'translate-x-full'}`}>
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3">
+        <div className="flex items-center justify-between border-b border-surface-border px-4 py-3">
           <div className="flex items-center gap-2.5">
             <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-violet-500 to-blue-500"><Sparkles className="h-4 w-4 text-white" /></div>
             <div>
-              <p className="text-[13px] font-semibold text-zinc-900">CounselAI</p>
-              <p className="text-[10px] text-zinc-400">
+              <p className="text-[13px] font-semibold text-content">CounselAI</p>
+              <p className="text-[12px] text-content-muted">
                 {executing ? <span className="flex items-center gap-1 text-violet-600"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-violet-500" />Working...</span> : 'Full access · Claude Sonnet 4.6'}
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="rounded-md p-1.5 text-zinc-400 hover:bg-zinc-100"><X className="h-4 w-4" /></button>
+          <button onClick={onClose} className="rounded-md p-1.5 text-content-muted hover:bg-surface-sunken"><X className="h-4 w-4" /></button>
         </div>
 
         {/* Messages */}
@@ -361,12 +361,12 @@ export function CounselAiPanel({ open, onClose }: CounselAiPanelProps): ReactEle
             <div key={msg.id} className="mb-4">
               <div className={`flex gap-2.5 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                 {msg.role !== 'system' && (
-                  <div className={`mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full ${msg.role === 'user' ? 'bg-zinc-900' : 'bg-gradient-to-br from-violet-500 to-blue-500'}`}>
+                  <div className={`mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full ${msg.role === 'user' ? 'bg-content' : 'bg-gradient-to-br from-violet-500 to-blue-500'}`}>
                     {msg.role === 'user' ? <User className="h-3.5 w-3.5 text-white" /> : <Bot className="h-3.5 w-3.5 text-white" />}
                   </div>
                 )}
                 <div className={`max-w-[85%] rounded-xl px-3.5 py-2.5 text-[13px] leading-relaxed ${
-                  msg.role === 'user' ? 'bg-zinc-900 text-white' : msg.role === 'system' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-zinc-100 text-zinc-800'
+                  msg.role === 'user' ? 'bg-content text-white' : msg.role === 'system' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-surface-sunken text-content'
                 }`}>{msg.content}</div>
               </div>
 
@@ -377,13 +377,13 @@ export function CounselAiPanel({ open, onClose }: CounselAiPanelProps): ReactEle
                     <div key={step.id} className={`flex items-start gap-2 rounded-lg border px-3 py-2 transition-all duration-300 ${
                       step.status === 'running' ? 'border-violet-300 bg-violet-50' :
                       step.status === 'waiting_permission' ? 'border-amber-300 bg-amber-50' :
-                      step.status === 'done' ? 'border-zinc-100 bg-white' : 'border-zinc-100 bg-zinc-50/50 opacity-40'
+                      step.status === 'done' ? 'border-surface-border/50 bg-surface-raised' : 'border-surface-border/50 bg-surface/50 opacity-40'
                     }`}>
                       <div className="mt-0.5 shrink-0">
                         {step.status === 'done' ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" /> :
                          step.status === 'running' ? <Loader2 className="h-3.5 w-3.5 animate-spin text-violet-600" /> :
                          step.status === 'waiting_permission' ? <ShieldAlert className="h-3.5 w-3.5 text-amber-600" /> :
-                         <div className="h-3.5 w-3.5 rounded-full border-2 border-zinc-300" />}
+                         <div className="h-3.5 w-3.5 rounded-full border-2 border-surface-border-hover" />}
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-1.5">
@@ -392,15 +392,15 @@ export function CounselAiPanel({ open, onClose }: CounselAiPanelProps): ReactEle
                           {step.type === 'action' && <Zap className="h-3 w-3 text-amber-500" />}
                           {step.type === 'permission' && <ShieldAlert className="h-3 w-3 text-amber-600" />}
                           {step.type === 'done' && <CheckCircle2 className="h-3 w-3 text-emerald-500" />}
-                          <p className="text-[11px] font-medium text-zinc-800">{step.label}</p>
+                          <p className="text-[12px] font-medium text-content">{step.label}</p>
                         </div>
-                        {step.detail && <p className="mt-0.5 text-[10px] text-zinc-500">{step.detail}</p>}
+                        {step.detail && <p className="mt-0.5 text-[12px] text-content-tertiary">{step.detail}</p>}
                         {step.status === 'waiting_permission' && (
                           <div className="mt-2 flex gap-2">
-                            <button onClick={grantPermission} className="flex items-center gap-1 rounded-md bg-emerald-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-emerald-500">
+                            <button onClick={grantPermission} className="flex items-center gap-1 rounded-md bg-emerald-600 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-emerald-500">
                               <CheckCircle2 className="h-3 w-3" /> Yes, proceed
                             </button>
-                            <button onClick={denyPermission} className="rounded-md border border-zinc-300 px-3 py-1.5 text-[11px] font-medium text-zinc-600 hover:bg-zinc-50">Cancel</button>
+                            <button onClick={denyPermission} className="rounded-md border border-surface-border-hover px-3 py-1.5 text-[12px] font-medium text-content-secondary hover:bg-surface">Cancel</button>
                           </div>
                         )}
                       </div>
@@ -421,13 +421,13 @@ export function CounselAiPanel({ open, onClose }: CounselAiPanelProps): ReactEle
 
         {/* Suggestions */}
         {messages.length <= 2 && !executing && (
-          <div className="border-t border-zinc-100 px-4 py-2">
-            <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-zinc-400">Try saying</p>
+          <div className="border-t border-surface-border/50 px-4 py-2">
+            <p className="mb-2 text-[12px] font-medium uppercase tracking-wider text-content-muted">Try saying</p>
             <div className="space-y-1">
               {SUGGESTIONS.map((s) => {
                 const Icon = s.icon;
                 return (
-                  <button key={s.text} onClick={() => setInput(s.text)} className="flex w-full items-center gap-2 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-left text-[12px] text-zinc-600 transition-colors hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700">
+                  <button key={s.text} onClick={() => setInput(s.text)} className="flex w-full items-center gap-2 rounded-lg border border-surface-border bg-surface-raised px-3 py-2 text-left text-[12px] text-content-secondary transition-colors hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700">
                     <Icon className="h-3.5 w-3.5 shrink-0" />{s.text}
                   </button>
                 );
@@ -437,17 +437,17 @@ export function CounselAiPanel({ open, onClose }: CounselAiPanelProps): ReactEle
         )}
 
         {/* Input */}
-        <div className="border-t border-zinc-200 p-3">
+        <div className="border-t border-surface-border p-3">
           <div className="flex items-center gap-2">
             <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSend()} disabled={executing}
               placeholder={executing ? 'Working...' : 'Tell me what to do...'}
-              className="flex-1 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-[13px] placeholder:text-zinc-400 focus:border-violet-500 focus:bg-white focus:outline-none disabled:opacity-50" />
+              className="flex-1 rounded-lg border border-surface-border bg-surface px-3 py-2.5 text-[13px] placeholder:text-content-muted focus:border-violet-500 focus:bg-surface-raised focus:outline-none disabled:opacity-50" />
             <button onClick={handleSend} disabled={!input.trim() || executing}
               className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-violet-600 to-blue-600 text-white hover:from-violet-500 hover:to-blue-500 disabled:opacity-40">
               <Send className="h-4 w-4" />
             </button>
           </div>
-          <p className="mt-1.5 text-center text-[10px] text-zinc-400">Full access · Asks permission before changes · All actions logged</p>
+          <p className="mt-1.5 text-center text-[12px] text-content-muted">Full access · Asks permission before changes · All actions logged</p>
         </div>
       </div>
     </>

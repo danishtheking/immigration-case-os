@@ -26,10 +26,10 @@ export default function ReportsPage(): ReactElement {
       <main className="flex-1 overflow-y-auto p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-semibold text-zinc-900">Reports & Analytics</h1>
-            <p className="text-[12px] text-zinc-500">Caseload, cycle times, approval rates, revenue</p>
+            <h1 className="text-lg font-semibold text-content">Reports & Analytics</h1>
+            <p className="text-[12px] text-content-tertiary">Caseload, cycle times, approval rates, revenue</p>
           </div>
-          <button className="flex items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-2 text-[12px] text-zinc-600 hover:bg-zinc-50">
+          <button className="flex items-center gap-1.5 rounded-lg border border-surface-border px-3 py-2 text-[12px] text-content-secondary hover:bg-surface">
             <Download className="h-3.5 w-3.5" /> Export CSV
           </button>
         </div>
@@ -44,45 +44,45 @@ export default function ReportsPage(): ReactElement {
 
         <div className="mt-5 grid grid-cols-2 gap-4">
           {/* Case type mix */}
-          <div className="rounded-xl border border-zinc-200 bg-white p-5">
-            <h2 className="text-[13px] font-semibold text-zinc-900">Case type distribution</h2>
+          <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
+            <h2 className="text-[13px] font-semibold text-content">Case type distribution</h2>
             <div className="mt-4 space-y-3">
               {CASE_MIX.map((c) => (
                 <div key={c.type} className="flex items-center gap-3">
-                  <span className="w-28 text-[12px] text-zinc-600">{c.type}</span>
+                  <span className="w-28 text-[12px] text-content-secondary">{c.type}</span>
                   <div className="flex-1">
-                    <div className="h-2 overflow-hidden rounded-full bg-zinc-100">
+                    <div className="h-2 overflow-hidden rounded-full bg-surface-sunken">
                       <div className={`h-full rounded-full ${c.color}`} style={{ width: `${c.pct * 4}%` }} />
                     </div>
                   </div>
-                  <span className="w-8 text-right text-[12px] font-medium text-zinc-700">{c.count}</span>
-                  <span className="w-10 text-right text-[11px] text-zinc-400">{c.pct}%</span>
+                  <span className="w-8 text-right text-[12px] font-medium text-content-secondary">{c.count}</span>
+                  <span className="w-10 text-right text-[12px] text-content-muted">{c.pct}%</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Revenue by month (bar placeholder) */}
-          <div className="rounded-xl border border-zinc-200 bg-white p-5">
-            <h2 className="text-[13px] font-semibold text-zinc-900">Monthly revenue</h2>
+          <div className="rounded-xl border border-surface-border bg-surface-raised p-5">
+            <h2 className="text-[13px] font-semibold text-content">Monthly revenue</h2>
             <div className="mt-4 flex items-end gap-2" style={{ height: 200 }}>
               {[120, 145, 138, 162, 178, 184, 156, 192, 184, 168, 195, 184].map((v, i) => (
                 <div key={i} className="flex flex-1 flex-col items-center gap-1">
-                  <div className={`w-full rounded-t-md ${i === 11 ? 'bg-blue-500' : 'bg-zinc-200'}`} style={{ height: `${(v / 200) * 100}%` }} />
-                  <span className="text-[9px] text-zinc-400">{['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'][i]}</span>
+                  <div className={`w-full rounded-t-md ${i === 11 ? 'bg-blue-500' : 'bg-surface-sunken'}`} style={{ height: `${(v / 200) * 100}%` }} />
+                  <span className="text-[9px] text-content-muted">{['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'][i]}</span>
                 </div>
               ))}
             </div>
-            <p className="mt-2 text-right text-[11px] text-zinc-400">$K · current month highlighted</p>
+            <p className="mt-2 text-right text-[12px] text-content-muted">$K · current month highlighted</p>
           </div>
         </div>
 
         {/* Attorney performance */}
-        <div className="mt-4 rounded-xl border border-zinc-200 bg-white p-5">
-          <h2 className="text-[13px] font-semibold text-zinc-900">Attorney performance</h2>
+        <div className="mt-4 rounded-xl border border-surface-border bg-surface-raised p-5">
+          <h2 className="text-[13px] font-semibold text-content">Attorney performance</h2>
           <table className="mt-3 w-full">
             <thead>
-              <tr className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
+              <tr className="text-[12px] font-semibold uppercase tracking-wider text-content-muted">
                 <th className="pb-2 text-left">Attorney</th>
                 <th className="pb-2 text-right">Active cases</th>
                 <th className="pb-2 text-right">Filed (YTD)</th>
@@ -93,13 +93,13 @@ export default function ReportsPage(): ReactElement {
             </thead>
             <tbody className="text-[13px]">
               {ATTORNEYS.map((a) => (
-                <tr key={a.name} className="border-t border-zinc-50">
-                  <td className="py-2.5 font-medium text-zinc-900">{a.name}</td>
-                  <td className="py-2.5 text-right text-zinc-700">{a.active}</td>
-                  <td className="py-2.5 text-right text-zinc-700">{a.filed}</td>
+                <tr key={a.name} className="border-t border-surface-border/30">
+                  <td className="py-2.5 font-medium text-content">{a.name}</td>
+                  <td className="py-2.5 text-right text-content-secondary">{a.active}</td>
+                  <td className="py-2.5 text-right text-content-secondary">{a.filed}</td>
                   <td className="py-2.5 text-right text-emerald-600 font-medium">{a.approved}</td>
-                  <td className="py-2.5 text-right text-zinc-700">{a.rfeRate}</td>
-                  <td className="py-2.5 text-right text-zinc-700">{a.avgCycle}</td>
+                  <td className="py-2.5 text-right text-content-secondary">{a.rfeRate}</td>
+                  <td className="py-2.5 text-right text-content-secondary">{a.avgCycle}</td>
                 </tr>
               ))}
             </tbody>
@@ -112,13 +112,13 @@ export default function ReportsPage(): ReactElement {
 
 function ReportCard({ label, value, change, icon }: { label: string; value: string; change: string; icon: ReactElement }): ReactElement {
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-4">
+    <div className="rounded-xl border border-surface-border bg-surface-raised p-4">
       <div className="flex items-center justify-between">
-        <p className="text-[12px] font-medium text-zinc-500">{label}</p>
-        <div className="grid h-8 w-8 place-items-center rounded-lg bg-zinc-50 text-zinc-400">{icon}</div>
+        <p className="text-[12px] font-medium text-content-tertiary">{label}</p>
+        <div className="grid h-8 w-8 place-items-center rounded-lg bg-surface text-content-muted">{icon}</div>
       </div>
-      <p className="mt-2 text-2xl font-bold text-zinc-900">{value}</p>
-      <p className="mt-1 text-[11px] text-emerald-600">{change}</p>
+      <p className="mt-2 text-2xl font-bold text-content">{value}</p>
+      <p className="mt-1 text-[12px] text-emerald-600">{change}</p>
     </div>
   );
 }

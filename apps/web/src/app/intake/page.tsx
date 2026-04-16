@@ -61,14 +61,14 @@ export default function IntakePage(): ReactElement {
           <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-full bg-emerald-100">
             <CheckCircle2 className="h-8 w-8 text-emerald-600" />
           </div>
-          <h2 className="text-2xl font-bold text-zinc-900">We received your information</h2>
-          <p className="mt-3 text-zinc-500">
+          <h2 className="text-2xl font-bold text-content">We received your information</h2>
+          <p className="mt-3 text-content-tertiary">
             Our team will review your profile and reach out within 24 hours with an initial assessment
             of your strongest visa path.
           </p>
           <Link
             href="/dashboard"
-            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white"
+            className="mt-8 inline-flex items-center gap-2 rounded-lg bg-content px-5 py-2.5 text-sm font-semibold text-white"
           >
             View demo dashboard
           </Link>
@@ -82,11 +82,11 @@ export default function IntakePage(): ReactElement {
       <div className="mx-auto max-w-2xl py-12">
         {/* Progress */}
         <div className="mb-8">
-          <div className="flex items-center justify-between text-[12px] text-zinc-400">
+          <div className="flex items-center justify-between text-[12px] text-content-muted">
             <span>Step {step + 1} of {totalSteps}</span>
             <span>{Math.round(((step + 1) / totalSteps) * 100)}% complete</span>
           </div>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-zinc-200">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface-sunken">
             <div
               className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 transition-all duration-300"
               style={{ width: `${((step + 1) / totalSteps) * 100}%` }}
@@ -95,7 +95,7 @@ export default function IntakePage(): ReactElement {
         </div>
 
         {/* Step content */}
-        <div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
+        <div className="rounded-2xl border border-surface-border bg-surface-raised p-8 shadow-sm">
           {step === 0 && (
             <StepOne profileType={profileType} onSelect={setProfileType} />
           )}
@@ -117,7 +117,7 @@ export default function IntakePage(): ReactElement {
           <button
             onClick={handleBack}
             disabled={step === 0}
-            className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-[13px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100 disabled:invisible"
+            className="flex items-center gap-1.5 rounded-lg px-4 py-2 text-[13px] font-medium text-content-secondary transition-colors hover:bg-surface-sunken disabled:invisible"
           >
             <ArrowLeft className="h-3.5 w-3.5" /> Back
           </button>
@@ -126,7 +126,7 @@ export default function IntakePage(): ReactElement {
             <button
               onClick={handleNext}
               disabled={step === 0 && !profileType}
-              className="flex items-center gap-1.5 rounded-lg bg-zinc-900 px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-zinc-800 disabled:opacity-40"
+              className="flex items-center gap-1.5 rounded-lg bg-content px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-content/90 disabled:opacity-40"
             >
               Continue <ArrowRight className="h-3.5 w-3.5" />
             </button>
@@ -149,15 +149,15 @@ export default function IntakePage(): ReactElement {
 function Shell({ children }: { children: React.ReactNode }): ReactElement {
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-50 via-white to-blue-50/30">
-      <header className="border-b border-zinc-200/60 bg-white/80 backdrop-blur-sm">
+      <header className="border-b border-surface-border/60 bg-surface-raised/80 backdrop-blur-sm">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-2.5">
             <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 text-xs font-black text-white">
               SB
             </div>
-            <span className="text-sm font-semibold text-zinc-900">StitchBoat Immigration</span>
+            <span className="text-sm font-semibold text-content">StitchBoat Immigration</span>
           </div>
-          <select className="rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-[12px] text-zinc-600">
+          <select className="rounded-lg border border-surface-border bg-surface-raised px-3 py-1.5 text-[12px] text-content-secondary">
             <option>English</option>
             <option>Espanol</option>
             <option>Hindi</option>
@@ -168,7 +168,7 @@ function Shell({ children }: { children: React.ReactNode }): ReactElement {
         </div>
       </header>
       {children}
-      <footer className="py-6 text-center text-[11px] text-zinc-400">
+      <footer className="py-6 text-center text-[12px] text-content-muted">
         Your information stays with StitchBoat Immigration. We do not share it.
       </footer>
     </div>
@@ -186,10 +186,10 @@ function StepOne({
 }): ReactElement {
   return (
     <div>
-      <h2 className="text-2xl font-bold text-zinc-900">
+      <h2 className="text-2xl font-bold text-content">
         Let&apos;s see if we can help
       </h2>
-      <p className="mt-2 text-[14px] text-zinc-500">
+      <p className="mt-2 text-[14px] text-content-tertiary">
         Select what best describes you today. This helps us find the strongest visa path for your profile.
       </p>
       <div className="mt-6 grid grid-cols-2 gap-3">
@@ -203,10 +203,10 @@ function StepOne({
               className={`flex items-center gap-3 rounded-xl border p-4 text-left text-[13px] font-medium transition-all ${
                 active
                   ? 'border-blue-500 bg-blue-50 text-blue-700 ring-1 ring-blue-200'
-                  : 'border-zinc-200 text-zinc-700 hover:border-zinc-300 hover:bg-zinc-50'
+                  : 'border-surface-border text-content-secondary hover:border-surface-border-hover hover:bg-surface'
               }`}
             >
-              <Icon className={`h-5 w-5 ${active ? 'text-blue-600' : 'text-zinc-400'}`} />
+              <Icon className={`h-5 w-5 ${active ? 'text-blue-600' : 'text-content-muted'}`} />
               {type.label}
             </button>
           );
@@ -235,8 +235,8 @@ function StepTwo({
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-zinc-900">Your details</h2>
-      <p className="mt-2 text-[14px] text-zinc-500">
+      <h2 className="text-2xl font-bold text-content">Your details</h2>
+      <p className="mt-2 text-[14px] text-content-tertiary">
         We need basic contact info to reach you with your assessment.
       </p>
       <div className="mt-6 space-y-4">
@@ -270,18 +270,18 @@ function StepThree({
 }): ReactElement {
   return (
     <div>
-      <h2 className="text-2xl font-bold text-zinc-900">Upload your CV</h2>
-      <p className="mt-2 text-[14px] text-zinc-500">
+      <h2 className="text-2xl font-bold text-content">Upload your CV</h2>
+      <p className="mt-2 text-[14px] text-content-tertiary">
         Optional but recommended — it speeds up the assessment significantly.
       </p>
 
       <div className="mt-6">
-        <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-zinc-300 bg-zinc-50 px-6 py-10 transition-colors hover:border-blue-400 hover:bg-blue-50/30">
-          <Upload className="h-8 w-8 text-zinc-400" />
-          <p className="mt-3 text-[13px] font-medium text-zinc-600">
+        <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-surface-border-hover bg-surface px-6 py-10 transition-colors hover:border-blue-400 hover:bg-blue-50/30">
+          <Upload className="h-8 w-8 text-content-muted" />
+          <p className="mt-3 text-[13px] font-medium text-content-secondary">
             {file ? file.name : 'Drop PDF or DOCX here, or click to browse'}
           </p>
-          <p className="mt-1 text-[11px] text-zinc-400">Max 10 MB</p>
+          <p className="mt-1 text-[12px] text-content-muted">Max 10 MB</p>
           <input
             type="file"
             className="hidden"
@@ -292,18 +292,18 @@ function StepThree({
       </div>
 
       <div className="mt-6">
-        <div className="flex items-center gap-2 text-[12px] text-zinc-400">
-          <div className="h-px flex-1 bg-zinc-200" />
+        <div className="flex items-center gap-2 text-[12px] text-content-muted">
+          <div className="h-px flex-1 bg-surface-sunken" />
           <span>or paste your LinkedIn</span>
-          <div className="h-px flex-1 bg-zinc-200" />
+          <div className="h-px flex-1 bg-surface-sunken" />
         </div>
         <div className="relative mt-3">
-          <Link2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+          <Link2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-content-muted" />
           <input
             value={form.linkedinUrl}
             onChange={(e) => onChange({ ...form, linkedinUrl: e.target.value })}
             placeholder="https://linkedin.com/in/yourprofile"
-            className="w-full rounded-lg border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-[13px] text-zinc-900 placeholder:text-zinc-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-200"
+            className="w-full rounded-lg border border-surface-border bg-surface-raised py-2.5 pl-10 pr-4 text-[13px] text-content placeholder:text-content-muted focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-200"
           />
         </div>
       </div>
@@ -330,7 +330,7 @@ function Field({
 }): ReactElement {
   return (
     <div>
-      <label className="mb-1 block text-[12px] font-medium text-zinc-600">
+      <label className="mb-1 block text-[12px] font-medium text-content-secondary">
         {label}
         {required && <span className="ml-0.5 text-red-500">*</span>}
       </label>
@@ -339,7 +339,7 @@ function Field({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-lg border border-zinc-200 bg-white px-3 py-2.5 text-[13px] text-zinc-900 placeholder:text-zinc-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-200"
+        className="w-full rounded-lg border border-surface-border bg-surface-raised px-3 py-2.5 text-[13px] text-content placeholder:text-content-muted focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-200"
       />
     </div>
   );

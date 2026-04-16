@@ -19,7 +19,7 @@ export default async function SignUpPage(): Promise<ReactElement> {
 function PreviewStub({ action }: { action: string }): ReactElement {
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12">
-      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-surface-raised p-8 shadow-sm">
         <div className="flex items-center gap-3">
           <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 font-black text-white">
             IO

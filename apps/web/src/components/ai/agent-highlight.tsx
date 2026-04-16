@@ -70,7 +70,7 @@ export function AgentHighlight({ selector, label }: AgentHighlightProps): ReactE
             className="absolute flex items-center gap-1.5 rounded-lg bg-violet-600 px-3 py-1.5 text-[12px] font-semibold text-white shadow-lg transition-all duration-300"
             style={{ top: rect.top - 36, left: rect.left }}
           >
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-surface-raised" />
             {label}
           </div>
         )}

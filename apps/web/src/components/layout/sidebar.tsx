@@ -48,7 +48,7 @@ export function Sidebar({ orgName = 'StitchBoat Immigration', orgSlug = 'stitchb
         {!collapsed && (
           <div className="min-w-0">
             <div className="truncate text-[13px] font-semibold text-white">{orgName}</div>
-            <div className="truncate text-[11px] text-sidebar-text">Immigration Case OS</div>
+            <div className="truncate text-[12px] text-sidebar-text">Immigration Case OS</div>
           </div>
         )}
       </div>
@@ -77,7 +77,7 @@ export function Sidebar({ orgName = 'StitchBoat Immigration', orgSlug = 'stitchb
                 <>
                   <span className="flex-1">{item.label}</span>
                   {item.badge && (
-                    <span className="grid h-5 min-w-5 place-items-center rounded-full bg-danger px-1 text-[10px] font-bold text-white">
+                    <span className="grid h-5 min-w-5 place-items-center rounded-full bg-danger px-1 text-[12px] font-bold text-white">
                       {item.badge}
                     </span>
                   )}
@@ -91,12 +91,12 @@ export function Sidebar({ orgName = 'StitchBoat Immigration', orgSlug = 'stitchb
       {/* Intake card */}
       {!collapsed && (
         <div className="mx-3 mb-3 rounded-[10px] border border-sidebar-border bg-sidebar-hover p-3">
-          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-content-inverse">
+          <div className="flex items-center gap-1.5 text-[12px] font-semibold text-content-inverse">
             <Link2 className="h-3.5 w-3.5" />
             Branded intake
           </div>
-          <div className="mt-1 truncate text-[11px] text-sidebar-text">apply.{orgSlug}.io</div>
-          <button className="mt-2.5 w-full rounded-[8px] bg-brand px-2 py-1.5 text-[11px] font-semibold text-white shadow-sm shadow-brand/20 transition-all hover:bg-brand-light">
+          <div className="mt-1 truncate text-[12px] text-sidebar-text">apply.{orgSlug}.io</div>
+          <button className="mt-2.5 w-full rounded-[8px] bg-brand px-2 py-1.5 text-[12px] font-semibold text-white shadow-sm shadow-brand/20 transition-all hover:bg-brand-light">
             Copy link
           </button>
         </div>

@@ -20,7 +20,7 @@ export function DashboardShell({ children }: { children: ReactNode }): ReactElem
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-zinc-50">
+    <div className="flex h-screen overflow-hidden bg-surface">
       <Sidebar />
       <div className={`flex flex-1 flex-col overflow-hidden transition-all duration-300 ${aiOpen ? 'mr-[420px]' : ''}`}>
         {children}
@@ -29,13 +29,13 @@ export function DashboardShell({ children }: { children: ReactNode }): ReactElem
       <button
         onClick={() => setAiOpen(!aiOpen)}
         className={`fixed bottom-6 z-50 flex items-center gap-2 rounded-full px-4 py-3 font-semibold text-white shadow-lg transition-all hover:scale-105 ${
-          aiOpen ? 'right-[440px] bg-zinc-800' : 'right-6 bg-gradient-to-r from-violet-600 to-blue-600'
+          aiOpen ? 'right-[440px] bg-content/90' : 'right-6 bg-gradient-to-r from-violet-600 to-blue-600'
         }`}
       >
         <Sparkles className="h-4 w-4" />
         <span className="text-[13px]">{aiOpen ? 'Close AI' : 'CounselAI'}</span>
         {!aiOpen && (
-          <kbd className="ml-1 rounded border border-white/20 bg-white/10 px-1.5 py-0.5 text-[10px]">⌘K</kbd>
+          <kbd className="ml-1 rounded border border-white/20 bg-surface-raised/10 px-1.5 py-0.5 text-[12px]">⌘K</kbd>
         )}
       </button>
 
