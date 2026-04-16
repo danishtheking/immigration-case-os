@@ -1,14 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "experimentalServices": {
-    "web": {
-      "entrypoint": "apps/web",
-      "routePrefix": "/",
-      "framework": "nextjs"
-    },
-    "ml": {
-      "entrypoint": "services/ml",
-      "routePrefix": "/_/ml"
-    }
-  }
+  "buildCommand": "pnpm --filter @ico/web build",
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "outputDirectory": "apps/web/.next"
 }
